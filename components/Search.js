@@ -11,14 +11,18 @@ export const Search = ({ route }) => {
   const [recomendation, setRecomendation] = useState({});
 
   const handleSearch = async () => {
-    const response = await fetch(
-      `http://localhost:8000/recommendation/${user.id}/${textSearch}`
-    );
-    if (response.status == 200) {
-      const data = await response.json();
-      searchActivity(data.movie);
+    if (textSearch) {
+      const response = await fetch(
+        `http://localhost:8000/recommendation/${user.id}/${textSearch}`
+      );
+      if (response.status == 200) {
+        const data = await response.json();
+        searchActivity(data.movie);
+      } else {
+        alert("Recommendation not found");
+      }
     } else {
-      alert("Recommendation not found");
+      alert("Por favor ingrese alguna recomendacion");
     }
   };
 

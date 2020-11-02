@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
+import md5 from "md5";
 
 export const Signup = ({ navigation }) => {
   const [username, setUsermame] = useState("");
@@ -16,7 +17,7 @@ export const Signup = ({ navigation }) => {
     const data = {
       name: username,
       email: email,
-      password: password,
+      password: md5(password),
     };
     const res = await fetch("http://localhost:8000/users/", {
       method: "POST",

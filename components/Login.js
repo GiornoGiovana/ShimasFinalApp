@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
+import md5 from "md5";
 
 export const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -14,7 +15,7 @@ export const Login = ({ navigation }) => {
   const handleLogin = async () => {
     const data = {
       email: email,
-      password: password,
+      password: md5(password),
     };
     const response = await fetch("http://localhost:8000/users/login/", {
       method: "POST",
@@ -27,7 +28,9 @@ export const Login = ({ navigation }) => {
       const user = await response.json();
       navigation.navigate("MyTabs", user);
     } else {
-      alert("Usuario no encontrado");
+      alert(
+        "El correo o contraseña son incorrectos, por favor intente nuevamente"
+      );
     }
   };
 

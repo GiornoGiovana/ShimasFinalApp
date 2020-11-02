@@ -97,10 +97,11 @@ export const Quiz = ({ route, navigation }) => {
           }
         >
           <Picker.Item label="Adventure" value="Adventure" />
-          <Picker.Item label="Terror" value="Terror" />
+          <Picker.Item label="Crime" value="Crime" />
           <Picker.Item label="Thriller" value="Thriller" />
           <Picker.Item label="Action" value="Action" />
           <Picker.Item label="Fantasy" value="Fantasy" />
+          <Picker.Item label="Family" value="Family" />
         </Picker>
         <Picker
           style={styles.picker}

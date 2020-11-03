@@ -7,6 +7,7 @@ import {
   TextInput,
 } from "react-native";
 import { Header } from "./Header";
+import md5 from "md5";
 
 export const EditProfile = ({ route, navigation }) => {
   const user = route.params;
@@ -19,7 +20,7 @@ export const EditProfile = ({ route, navigation }) => {
     const data = {
       name: username,
       email: email,
-      password: password,
+      password: md5(password),
     };
     const res = await fetch(`http://localhost:8000/users/${user.id}/`, {
       method: "PATCH",

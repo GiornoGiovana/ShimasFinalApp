@@ -11,6 +11,7 @@ import md5 from "md5";
 export const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
 
   const handleLogin = async () => {
     const data = {
@@ -28,9 +29,7 @@ export const Login = ({ navigation }) => {
       const user = await response.json();
       navigation.navigate("MyTabs", user);
     } else {
-      alert(
-        "El correo o contraseña son incorrectos, por favor intente nuevamente"
-      );
+      setError(true);
     }
   };
 
@@ -58,6 +57,12 @@ export const Login = ({ navigation }) => {
           onChangeText={(text) => setPassword(text)}
           value={password}
         />
+        {error && (
+          <Text style={styles.error}>
+            El correo o contraseña ingresados son incorrectos, por favor intente
+            nuevamente.
+          </Text>
+        )}
         <TouchableOpacity style={styles.buttom} onPress={handleLogin}>
           <Text style={styles.btnText}>Iniciar Sesion</Text>
         </TouchableOpacity>
@@ -114,5 +119,8 @@ const styles = StyleSheet.create({
     fontSize: 25,
     alignSelf: "center",
     fontFamily: "Comic Sans MS",
+  },
+  error: {
+    color: "#f05454",
   },
 });

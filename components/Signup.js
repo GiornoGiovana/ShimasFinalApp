@@ -12,6 +12,7 @@ export const Signup = ({ navigation }) => {
   const [username, setUsermame] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
 
   const handlePress = async () => {
     const data = {
@@ -31,7 +32,7 @@ export const Signup = ({ navigation }) => {
       const user = await res.json();
       navigation.navigate("Quiz", user);
     } else {
-      alert("El correo ya esta registrado, pruebe con otro");
+      setError(true);
     }
   };
 
@@ -58,6 +59,12 @@ export const Signup = ({ navigation }) => {
           onChangeText={(text) => setPassword(text)}
           value={password}
         />
+        {error && (
+          <Text style={styles.error}>
+            El correo que ingreso ya ha sido registrado intente con uno
+            diferente.
+          </Text>
+        )}
         <TouchableOpacity style={styles.buttom} onPress={handlePress}>
           <Text style={styles.btnText}>Registrarse</Text>
         </TouchableOpacity>
@@ -110,5 +117,8 @@ const styles = StyleSheet.create({
     fontSize: 25,
     alignSelf: "center",
     fontFamily: "Comic Sans MS",
+  },
+  error: {
+    color: "#f05454",
   },
 });

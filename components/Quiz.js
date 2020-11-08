@@ -123,7 +123,7 @@ export const Quiz = ({ route, navigation }) => {
           }
         >
           <Picker.Item label="Cocina Tradicional" value="Tradicional" />
-          <Picker.Item label="Alta cocina" value="Terror" />
+          <Picker.Item label="Alta cocina" value="Alta" />
           <Picker.Item label="Cocina Fusion" value="Fusion" />
         </Picker>
       </View>

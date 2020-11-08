@@ -9,10 +9,26 @@ export const Profile = ({ navigation, route }) => {
     navigation.navigate("Editar", user);
   };
 
+  const handleDelete = async () => {
+    const response = await fetch(`http://localhost:8000/users/${user.id}`, {
+      method: "DELETE",
+    });
+    if (response.status === 204) {
+      navigation.navigate("Iniciar Sesion");
+    }
+  };
+
+  const handleLogout = () => {
+    navigation.navigate("Iniciar Sesion");
+  };
+
   return (
     <View style={styles.container}>
       <Header />
       <View style={styles.profileContainer}>
+        <TouchableOpacity style={styles.logoutButtom} onPress={handleLogout}>
+          <Text style={styles.btnLogoutText}>Cerrar Sesion</Text>
+        </TouchableOpacity>
         <Image
           style={styles.logo}
           source={{
@@ -25,9 +41,14 @@ export const Profile = ({ navigation, route }) => {
         <Text style={styles.info}>{user.email}</Text>
         <Text style={styles.text}>Edad: </Text>
         <Text style={styles.info}>{user.edad}</Text>
-        <TouchableOpacity style={styles.buttom} onPress={handlePress}>
-          <Text style={styles.btnText}>Editar perfil</Text>
-        </TouchableOpacity>
+        <View style={styles.optionBtn}>
+          <TouchableOpacity style={styles.buttom} onPress={handlePress}>
+            <Text style={styles.btnText}>Editar perfil</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.deleteButtom} onPress={handleDelete}>
+            <Text style={styles.btnText}>Eliminar cuenta</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -39,7 +60,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   profileContainer: {
-    flex: 1,
+    height: "100%",
     alignItems: "center",
   },
   logo: {
@@ -75,11 +96,34 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 20,
     backgroundColor: "#00acee",
-    marginTop: 30,
-    width: "30%",
+    width: "20%",
   },
   btnText: {
     color: "#fff",
     fontWeight: "bold",
+  },
+  deleteButtom: {
+    alignSelf: "center",
+    alignItems: "center",
+    padding: 20,
+    backgroundColor: "#f05454",
+    width: "20%",
+  },
+  optionBtn: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+  },
+  logoutButtom: {
+    alignSelf: "flex-end",
+    alignItems: "center",
+    padding: 10,
+    backgroundColor: "#ff5722",
+    marginTop: 10,
+    marginRight: 10,
+  },
+  btnLogoutText: {
+    color: "#19d3da",
   },
 });

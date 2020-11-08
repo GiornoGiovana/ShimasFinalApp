@@ -9,6 +9,8 @@ export const Search = ({ route }) => {
 
   const [textSearch, setTextSearch] = useState("");
   const [recomendation, setRecomendation] = useState({});
+  const [notFound, setNotFound] = useState(false);
+  const [blank, setBlank] = useState(false);
 
   const handleSearch = async () => {
     if (textSearch) {
@@ -18,11 +20,15 @@ export const Search = ({ route }) => {
       if (response.status == 200) {
         const data = await response.json();
         searchActivity(data.movie);
+        setNotFound(false);
+        setBlank(false);
       } else {
-        alert("Recommendation not found");
+        setNotFound(true);
+        setRecomendation(null);
       }
     } else {
-      alert("Por favor ingrese alguna recomendacion");
+      setBlank(true);
+      setRecomendation(null);
     }
   };
 
@@ -47,6 +53,9 @@ export const Search = ({ route }) => {
           />
           <Button title="Buscar" onPress={handleSearch} />
         </View>
+        {(notFound || blank) && (
+          <Text style={styles.errorMessage}>Actividad no encontrada</Text>
+        )}
         {recomendation && (
           <View style={styles.itemCotainer}>
             <Image
@@ -128,5 +137,10 @@ const styles = StyleSheet.create({
     fontFamily: "Comic Sans MS",
     color: "#382933",
     fontWeight: "800",
+  },
+  errorMessage: {
+    color: "#f05454",
+    alignSelf: "center",
+    fontSize: 40,
   },
 });

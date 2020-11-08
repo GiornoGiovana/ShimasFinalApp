@@ -28,6 +28,9 @@ export const Login = ({ navigation }) => {
     if (response.status === 200) {
       const user = await response.json();
       navigation.navigate("MyTabs", user);
+      setEmail("");
+      setPassword("");
+      setError(false);
     } else {
       setError(true);
     }

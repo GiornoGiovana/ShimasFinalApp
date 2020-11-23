@@ -15,6 +15,7 @@ import { Search } from "./components/Search";
 import { Quiz } from "./components/Quiz";
 import { FilterList } from "./components/FilterList";
 import { EditProfile } from "./components/EditProfile";
+import { Activity } from "./components/Activity";
 
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -106,6 +107,11 @@ export default function App() {
         <Stack.Screen
           name="Editar"
           component={EditProfile}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Actividad"
+          component={Activity}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

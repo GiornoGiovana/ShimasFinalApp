@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, Image, StyleSheet, Text, View } from "react-native";
+import {
+  TouchableOpacity,
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { Header } from "./Header";
 
 const API_KEY = "13ded7d2";
 
-const Item = ({ movie, runtime }) => {
+const Item = ({ movie, runtime, navigation }) => {
   const [recomendation, setRecomendation] = useState([]);
 
   useEffect(() => {
@@ -19,26 +26,32 @@ const Item = ({ movie, runtime }) => {
     setRecomendation(data.Response == "True" ? data.Search[0] : null);
   };
 
+  const handlePress = () => {
+    navigation.navigate("Actividad", movie);
+  };
+
   return (
     recomendation && (
-      <View style={styles.itemCotainer}>
-        <Image
-          style={styles.img}
-          source={{
-            uri: recomendation.Poster,
-          }}
-        />
-        <View style={styles.infoSection}>
-          <Text style={styles.info}>{recomendation.Title}</Text>
-          <Text style={styles.info}>{recomendation.Year}</Text>
-          <Text style={styles.info}>{recomendation.Type}</Text>
+      <TouchableOpacity onPress={handlePress}>
+        <View style={styles.itemCotainer}>
+          <Image
+            style={styles.img}
+            source={{
+              uri: recomendation.Poster,
+            }}
+          />
+          <View style={styles.infoSection}>
+            <Text style={styles.info}>{recomendation.Title}</Text>
+            <Text style={styles.info}>{recomendation.Year}</Text>
+            <Text style={styles.info}>{recomendation.Type}</Text>
+          </View>
         </View>
-      </View>
+      </TouchableOpacity>
     )
   );
 };
 
-export const Home = ({ route }) => {
+export const Home = ({ route, navigation }) => {
   const user = route.params;
   const [activities, setActivities] = useState([]);
 
@@ -55,7 +68,9 @@ export const Home = ({ route }) => {
   };
 
   const renderItem = ({ item }) => {
-    return <Item movie={item.movie} runtime={item.runtime} />;
+    return (
+      <Item movie={item.movie} runtime={item.runtime} navigation={navigation} />
+    );
   };
 
   return (
